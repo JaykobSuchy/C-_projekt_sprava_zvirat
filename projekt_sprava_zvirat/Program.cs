@@ -1,3 +1,5 @@
+using projekt_sprava_zvirat.Logika;
+
 namespace projekt_sprava_zvirat
 {
     internal static class Program
@@ -11,7 +13,9 @@ namespace projekt_sprava_zvirat
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            var vybehLogika = new VybehLogika();
+            var zvireLogika = new ZvireLogika();
+            Application.Run(new Form1(vybehLogika, zvireLogika));
         }
     }
 }
