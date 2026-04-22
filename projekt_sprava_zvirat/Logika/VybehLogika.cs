@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace projekt_sprava_zvirat.Logika
 {
@@ -20,6 +21,11 @@ namespace projekt_sprava_zvirat.Logika
             vybehy.Add(vybeh);
         }
 
+        public void odeberVybeh(Vybeh vybeh)
+        {
+            vybehy.Remove(vybeh);
+        }
+
         public List<Vybeh> vratVybehy()
         {
             return vybehy;
@@ -28,6 +34,11 @@ namespace projekt_sprava_zvirat.Logika
         public void navysPocetZvirat(Vybeh vybeh)
         {
             vybeh.pocetZvirat++;
+        }
+
+        public void uberPocetZvirat(Vybeh vybeh)
+        {
+            vybeh.pocetZvirat--;
         }
 
         public bool testKapacity(Vybeh vybeh)
@@ -58,6 +69,24 @@ namespace projekt_sprava_zvirat.Logika
             int tmpId = vybehy.Last().Id;
 
             Vybeh.SynchronizaceId(tmpId+1);
+        }
+
+        public Vybeh NajdiVybeh(string vybehNazev)
+        {
+            //Vybeh vysledek = null;
+
+            return vybehy
+            .FirstOrDefault(v => v.Nazev.Equals(vybehNazev));
+
+            //foreach (var vybeh in vybehy)
+            //{
+            //    if (vybeh.Nazev == vybehNazev)
+            //    {
+            //        vysledek = vybeh;
+            //        return vysledek;
+            //    }
+            //}
+            //    return null;
         }
 
         //public int vratId()

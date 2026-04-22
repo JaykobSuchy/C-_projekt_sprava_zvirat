@@ -14,18 +14,18 @@ namespace projekt_sprava_zvirat.Entity
 
         public string Druh { get; set; }
 
-        public Vybeh Vybeh { get; set; }
+        public string VybehNazev { get; set; }
 
-        public Zvire(string jmeno, string druh, Vybeh vybeh) {
+        public Zvire(string jmeno, string druh, string vybehNazev) {
             Id = pocetId++;
             Jmeno = jmeno;
             Druh = druh;
-            Vybeh = vybeh;
+            VybehNazev = vybehNazev;
         }
 
         public override string ToString()
         {
-            return $"{Id}: {Jmeno} {Druh}/{Vybeh.Nazev}";
+            return $"{Id}: {Jmeno} {Druh}/{VybehNazev}";
         }
 
         public static void SynchronizaceId(int id)

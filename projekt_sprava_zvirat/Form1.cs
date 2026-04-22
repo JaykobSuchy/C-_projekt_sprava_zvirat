@@ -20,7 +20,7 @@ namespace projekt_sprava_zvirat
         {
             if (textBoxNazevVybehu.Text == "Název už existuje")
             {
-                textBoxNazevVybehu.Select(0,textBoxNazevVybehu.TextLength);
+                textBoxNazevVybehu.Select(0, textBoxNazevVybehu.TextLength);
                 return;
             }
             foreach (var item in vybehLogika.vratVybehy())
@@ -52,20 +52,19 @@ namespace projekt_sprava_zvirat
             {
                 return;
             }
+
             if (vybehLogika.testKapacity((Vybeh)comboBoxSeznamVybehu.SelectedItem))
             {
                 return;
             }
+            vybehLogika.navysPocetZvirat((Vybeh)comboBoxSeznamVybehu.SelectedItem);
             string jmeno = textBoxJmenoZvirete.Text;
-            var zvire = new Zvire(ZvireLogika.VelkePismeno(jmeno), ZvireLogika.VelkePismeno(textBoxDruh.Text), (Vybeh)comboBoxSeznamVybehu.SelectedItem);
+            var zvire = new Zvire(ZvireLogika.VelkePismeno(jmeno), ZvireLogika.VelkePismeno(textBoxDruh.Text),
+                ((Vybeh)comboBoxSeznamVybehu.SelectedItem).Nazev);
+
             zvireLogika.PridejZvire(zvire);
-            listBoxZvirata.Items.Clear();
-            listBoxZvirata.Items.AddRange(zvireLogika.VratZvirata().ToArray());
-            listBoxVybehy.Items.Clear();
-            listBoxVybehy.Items.AddRange(vybehLogika.vratVybehy().ToArray());
+            aktualizujVse();
             comboBoxSeznamVybehu.ResetText();
-            comboBoxSeznamVybehu.Items.Clear();
-            comboBoxSeznamVybehu.Items.AddRange(vybehLogika.vratVybehy().ToArray());
             textBoxJmenoZvirete.Clear();
             textBoxDruh.Clear();
 
@@ -97,7 +96,7 @@ namespace projekt_sprava_zvirat
 
         private void textBoxVyhledavani_MouseClick(object sender, MouseEventArgs e)
         {
-            
+
             textBoxVyhledavani.Select(0, textBoxVyhledavani.TextLength);
         }
 
@@ -109,7 +108,7 @@ namespace projekt_sprava_zvirat
 
         private void buttonNacist_Click(object sender, EventArgs e)
         {
-            vybehLogika.Nacti("Vybehy.json");//spatne funguje id pri dalsim pridavani vybehu ale pouze pokud se nacitali zvirata
+            vybehLogika.Nacti("Vybehy.json");
 
             comboBoxSeznamVybehu.Items.Clear();
             comboBoxSeznamVybehu.Items.AddRange(vybehLogika.vratVybehy().ToArray());
@@ -122,6 +121,38 @@ namespace projekt_sprava_zvirat
             //label8.Text = vybehLogika.vratId().ToString();
         }
 
-        
+        private void buttonSmazatVbh_Click(object sender, EventArgs e)
+        {
+            if ((Vybeh)listBoxVybehy.SelectedItem != null)
+            {
+                zvireLogika.SmazatZvirataPV((Vybeh)listBoxVybehy.SelectedItem);
+                vybehLogika.odeberVybeh((Vybeh)listBoxVybehy.SelectedItem);
+                aktualizujVse();
+            }
+            else return;
+        }
+
+        private void buttonSmazatZvr_Click(object sender, EventArgs e)
+        {
+            if ((Zvire)listBoxZvirata.SelectedItem != null)
+            {
+                Vybeh vybeh = vybehLogika.NajdiVybeh(((Zvire)listBoxZvirata.SelectedItem).VybehNazev);
+                vybehLogika.uberPocetZvirat(vybeh);
+                zvireLogika.SmazatZvire((Zvire)listBoxZvirata.SelectedItem);
+                aktualizujVse();
+            }
+            else return;
+
+        }
+
+        private void aktualizujVse()
+        {
+            listBoxZvirata.Items.Clear();
+            listBoxZvirata.Items.AddRange(zvireLogika.VratZvirata().ToArray());
+            listBoxVybehy.Items.Clear();
+            listBoxVybehy.Items.AddRange(vybehLogika.vratVybehy().ToArray());
+            comboBoxSeznamVybehu.Items.Clear();
+            comboBoxSeznamVybehu.Items.AddRange(vybehLogika.vratVybehy().ToArray());
+        }
     }
 }

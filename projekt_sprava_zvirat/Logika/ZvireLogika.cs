@@ -9,21 +9,33 @@ namespace projekt_sprava_zvirat.Logika
     public class ZvireLogika
     {
         private List<Zvire> zvirata;
-        private VybehLogika vybehLogika = new VybehLogika();
+        //private VybehLogika vybehLogika; 
 
         public ZvireLogika()
         {
             zvirata = new List<Zvire>();
+            //vybehLogika = new VybehLogika();
         }
 
         public void PridejZvire(Zvire zvire)
         {
-            if (vybehLogika.testKapacity(zvire.Vybeh))
-            {
-                return;
-            }
+            //if (vybehLogika.testKapacity(vybehLogika.NajdiVybeh(zvire.VybehNazev)))
+            //{
+            //    return;
+            //}
             zvirata.Add(zvire);
-            zvire.Vybeh.pocetZvirat++;
+            //vybehLogika.NajdiVybeh(zvire.VybehNazev).pocetZvirat++;
+            //zvire.Vybeh.pocetZvirat++;
+        }
+
+        public void SmazatZvire(Zvire zvire)
+        {
+            zvirata.Remove(zvire);
+        }
+
+        public void SmazatZvirataPV(Vybeh vybeh)
+        {
+            zvirata.RemoveAll(z => z.VybehNazev.Equals(vybeh.Nazev));
         }
 
         public List<Zvire> VratZvirata()
@@ -46,10 +58,19 @@ namespace projekt_sprava_zvirat.Logika
         }
 
         public void Ulozit(string cesta)
-        {
-            string json = JsonSerializer.Serialize(zvirata);
-            File.WriteAllText(cesta, json);
-        }
+        //{
+            {
+                string json = JsonSerializer.Serialize(zvirata);
+                File.WriteAllText(cesta, json);
+            }
+        //    using (StreamWriter sw = new StreamWriter(cesta))
+        //    {
+        //        foreach (var z in zvirata)
+        //        {
+        //            sw.WriteLine($"{z.Id};{z.Jmeno};{z.Druh};{z.VybehNazev}");
+        //        }
+        //    }
+        //}
 
         public void Nacti(string cesta)
         {
@@ -76,9 +97,5 @@ namespace projekt_sprava_zvirat.Logika
                 return text;
             return char.ToUpper(text[0]) + text.Substring(1).ToLower();
         }
-        //public void pridejZvireDoVybehu(Zvire zvire, Vybeh vybeh)
-        //{
-
-        //}
     }
 }

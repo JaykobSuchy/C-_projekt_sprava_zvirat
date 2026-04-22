@@ -49,6 +49,8 @@
             textBoxVyhledavani = new TextBox();
             buttonUlozit = new Button();
             buttonNacist = new Button();
+            buttonSmazatVbh = new Button();
+            buttonSmazatZvr = new Button();
             SuspendLayout();
             // 
             // textBoxNazevVybehu
@@ -75,7 +77,7 @@
             // 
             // buttonPridatVybeh
             // 
-            buttonPridatVybeh.Location = new Point(74, 128);
+            buttonPridatVybeh.Location = new Point(12, 128);
             buttonPridatVybeh.Name = "buttonPridatVybeh";
             buttonPridatVybeh.Size = new Size(75, 23);
             buttonPridatVybeh.TabIndex = 3;
@@ -121,7 +123,7 @@
             // 
             // buttonPridatZvire
             // 
-            buttonPridatZvire.Location = new Point(74, 376);
+            buttonPridatZvire.Location = new Point(12, 372);
             buttonPridatZvire.Name = "buttonPridatZvire";
             buttonPridatZvire.Size = new Size(75, 23);
             buttonPridatZvire.TabIndex = 9;
@@ -240,11 +242,33 @@
             buttonNacist.UseVisualStyleBackColor = true;
             buttonNacist.Click += buttonNacist_Click;
             // 
+            // buttonSmazatVbh
+            // 
+            buttonSmazatVbh.Location = new Point(99, 128);
+            buttonSmazatVbh.Name = "buttonSmazatVbh";
+            buttonSmazatVbh.Size = new Size(75, 23);
+            buttonSmazatVbh.TabIndex = 21;
+            buttonSmazatVbh.Text = "Smazat";
+            buttonSmazatVbh.UseVisualStyleBackColor = true;
+            buttonSmazatVbh.Click += buttonSmazatVbh_Click;
+            // 
+            // buttonSmazatZvr
+            // 
+            buttonSmazatZvr.Location = new Point(99, 372);
+            buttonSmazatZvr.Name = "buttonSmazatZvr";
+            buttonSmazatZvr.Size = new Size(75, 23);
+            buttonSmazatZvr.TabIndex = 22;
+            buttonSmazatZvr.Text = "Smazat";
+            buttonSmazatZvr.UseVisualStyleBackColor = true;
+            buttonSmazatZvr.Click += buttonSmazatZvr_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(buttonSmazatZvr);
+            Controls.Add(buttonSmazatVbh);
             Controls.Add(buttonNacist);
             Controls.Add(buttonUlozit);
             Controls.Add(textBoxVyhledavani);
@@ -295,5 +319,7 @@
         private TextBox textBoxVyhledavani;
         private Button buttonUlozit;
         private Button buttonNacist;
+        private Button buttonSmazatVbh;
+        private Button buttonSmazatZvr;
     }
 }
