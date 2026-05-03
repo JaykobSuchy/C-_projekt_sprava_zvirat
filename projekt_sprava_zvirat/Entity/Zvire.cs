@@ -16,12 +16,14 @@ namespace projekt_sprava_zvirat.Entity
 
         public string VybehNazev { get; set; }
 
-        public Zvire(string jmeno, string druh, string vybehNazev) {
+        public Zvire(string jmeno, string druh, string vybehNazev)
+        {
             Id = pocetId++;
             Jmeno = jmeno;
             Druh = druh;
             VybehNazev = vybehNazev;
         }
+        
 
         public override string ToString()
         {

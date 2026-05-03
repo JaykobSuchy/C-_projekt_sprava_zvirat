@@ -54,7 +54,6 @@ namespace projekt_sprava_zvirat.Logika
 
         public void Nacti(string cesta)
         {
-            Vybeh.SynchronizaceId(1);
             if (!File.Exists(cesta))
             {
                 return;
@@ -88,10 +87,16 @@ namespace projekt_sprava_zvirat.Logika
             //}
             //    return null;
         }
-
-        //public int vratId()
-        //{
-        //    return vybehy.Last().Id;
-        //}
+        public void UpravitVybeh(Vybeh vybehOld, string nazev, int kapacita)
+        {
+            foreach (var vybeh in vybehy)
+            {
+                if (vybeh.Id.Equals(vybehOld.Id))
+                {
+                    vybeh.Nazev = nazev;
+                    vybeh.kapacita = kapacita;
+                }
+            }
+        }
     }
 }

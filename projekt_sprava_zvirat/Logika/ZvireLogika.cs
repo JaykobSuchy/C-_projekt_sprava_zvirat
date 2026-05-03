@@ -33,7 +33,7 @@ namespace projekt_sprava_zvirat.Logika
             zvirata.Remove(zvire);
         }
 
-        public void SmazatZvirataPV(Vybeh vybeh)
+        public void SmazatZvirataPodleV(Vybeh vybeh)
         {
             zvirata.RemoveAll(z => z.VybehNazev.Equals(vybeh.Nazev));
         }
@@ -74,7 +74,6 @@ namespace projekt_sprava_zvirat.Logika
 
         public void Nacti(string cesta)
         {
-            Zvire.SynchronizaceId(1);
             if (!File.Exists(cesta))
             {
                 return;
@@ -89,6 +88,25 @@ namespace projekt_sprava_zvirat.Logika
 
             int tmpId = zvirata.Last().Id;
             Zvire.SynchronizaceId(tmpId+1);
+        }
+
+        public Zvire NajdiZvire(int id)
+        {
+            return zvirata
+            .FirstOrDefault(v => v.Id.Equals(id));
+        }
+
+        public void UpravitZvire(Zvire zvireOld, string jmeno, string druh, string vybehNazev)
+        {
+            foreach (var zvire in zvirata)
+            {
+                if (zvire.Id.Equals(zvireOld.Id))
+                {
+                    zvire.Jmeno = jmeno;
+                    zvire.Druh = druh;
+                    zvire.VybehNazev = vybehNazev;
+                }
+            }
         }
 
         public static string VelkePismeno(string text)
