@@ -33,9 +33,19 @@ namespace projekt_sprava_zvirat.Logika
             zvirata.Remove(zvire);
         }
 
-        public void SmazatZvirataPodleV(Vybeh vybeh)
+        public List<Zvire> SmazatZvirataPodleV(Vybeh vybeh)
         {
+            List<Zvire> vysledek = new List<Zvire>();
+            foreach (var zvire in zvirata)
+            {
+                if (zvire.VybehNazev.Equals(vybeh.Nazev))
+                {
+                    vysledek.Add(zvire);
+                }
+            }
             zvirata.RemoveAll(z => z.VybehNazev.Equals(vybeh.Nazev));
+
+            return vysledek;
         }
 
         public List<Zvire> VratZvirata()
@@ -50,6 +60,34 @@ namespace projekt_sprava_zvirat.Logika
             foreach (var zvire in zvirata)
             {
                 if (zvire.Jmeno.StartsWith(pismena,StringComparison.OrdinalIgnoreCase))
+                {
+                    vysledek.Add(zvire);
+                }
+            }
+            return vysledek;
+        }
+
+        public List<Zvire> VyhledejZvireDruh(string pismena)
+        {
+            List<Zvire> vysledek = new List<Zvire>();
+
+            foreach (var zvire in zvirata)
+            {
+                if (zvire.Druh.StartsWith(pismena, StringComparison.OrdinalIgnoreCase))
+                {
+                    vysledek.Add(zvire);
+                }
+            }
+            return vysledek;
+        }
+
+        public List<Zvire> VyhledejZvireVybeh(string pismena)
+        {
+            List<Zvire> vysledek = new List<Zvire>();
+
+            foreach (var zvire in zvirata)
+            {
+                if (zvire.VybehNazev.StartsWith(pismena, StringComparison.OrdinalIgnoreCase))
                 {
                     vysledek.Add(zvire);
                 }

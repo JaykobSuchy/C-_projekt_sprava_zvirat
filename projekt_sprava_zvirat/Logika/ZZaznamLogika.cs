@@ -32,7 +32,7 @@ namespace projekt_sprava_zvirat.Logika
 
         public void SmazatZaznamyPodleZ(Zvire zvire)
         {
-            zaznamy.RemoveAll(z => z.Id.Equals(zvire.Id));
+            zaznamy.RemoveAll(z => z.ZvireId.Equals(zvire.Id));
         }
         public void UpravitZZaznam(ZZaznam zaznamOld, string nazev, string diagnoza, int zvireId, string zvireJmeno)
         {

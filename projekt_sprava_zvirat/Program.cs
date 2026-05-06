@@ -16,7 +16,8 @@ namespace projekt_sprava_zvirat
             var vybehLogika = new VybehLogika();
             var zvireLogika = new ZvireLogika();
             var zzaznamLogika = new ZZaznamLogika();
-            Application.Run(new Form1(vybehLogika, zvireLogika, zzaznamLogika));
+            var krmeniLogika = new KrmeniLogika();
+            Application.Run(new Form1(vybehLogika, zvireLogika, zzaznamLogika, krmeniLogika));
         }
     }
 }

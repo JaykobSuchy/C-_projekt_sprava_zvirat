@@ -11,12 +11,14 @@ namespace projekt_sprava_zvirat
         private VybehLogika vybehLogika;
         private ZvireLogika zvireLogika;
         private ZZaznamLogika zzaznamLogika;
-        public Form1(VybehLogika vybehlogika, ZvireLogika zvireLogika, ZZaznamLogika zzaznamLogika)
+        private KrmeniLogika krmeniLogika;
+        public Form1(VybehLogika vybehlogika, ZvireLogika zvireLogika, ZZaznamLogika zzaznamLogika, KrmeniLogika krmeniLogika)
         {
             InitializeComponent();
             this.vybehLogika = vybehlogika;
             this.zvireLogika = zvireLogika;
             this.zzaznamLogika = zzaznamLogika;
+            this.krmeniLogika = krmeniLogika;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -61,7 +63,7 @@ namespace projekt_sprava_zvirat
 
         private void textBoxVyhledavani_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxVyhledavani.Text == "Vyhledávání")
+            if (textBoxVyhledavani.Text == "Vyhledávání jméno")
             {
                 return;
             }
@@ -71,13 +73,13 @@ namespace projekt_sprava_zvirat
 
         private void textBoxVyhledavani_Leave(object sender, EventArgs e)
         {
-            if (textBoxVyhledavani.Text.Equals("Vyhledávání"))
+            if (textBoxVyhledavani.Text.Equals("Vyhledávání jméno"))
             {
                 return;
             }
             if (textBoxVyhledavani.Text == "")
             {
-                textBoxVyhledavani.Text = "Vyhledávání";
+                textBoxVyhledavani.Text = "Vyhledávání jméno";
                 return;
             }
         }
@@ -88,11 +90,52 @@ namespace projekt_sprava_zvirat
             textBoxVyhledavani.Select(0, textBoxVyhledavani.TextLength);
         }
 
+        private void textBoxVyhledavaniDruh_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxVyhledavaniDruh.Text == "Vyhledávání druh")
+            {
+                return;
+            }
+            listBoxZvirata.Items.Clear();
+            listBoxZvirata.Items.AddRange(zvireLogika.VyhledejZvireDruh(textBoxVyhledavaniDruh.Text).ToArray());
+        }
+        private void textBoxVyhledavaniDruh_Leave(object sender, EventArgs e)
+        {
+            if (textBoxVyhledavaniDruh.Text.Equals("Vyhledávání druh"))
+            {
+                return;
+            }
+            if (textBoxVyhledavaniDruh.Text == "")
+            {
+                textBoxVyhledavaniDruh.Text = "Vyhledávání druh";
+                return;
+            }
+        }
+
+        private void textBoxVyhledavaniDruh_MouseClick(object sender, MouseEventArgs e)
+        {
+            textBoxVyhledavaniDruh.Select(0, textBoxVyhledavani.TextLength);
+        }
+
+        private void comboBoxVyhledejDleVybehu_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            listBoxZvirata.Items.Clear();
+            listBoxZvirata.Items.AddRange(zvireLogika.VyhledejZvireVybeh(((Vybeh)comboBoxVyhledejDleVybehu.SelectedItem).Nazev).ToArray());
+        }
+
+        private void comboBoxVyhledejDleVybehu_Click(object sender, EventArgs e)
+        {
+            comboBoxVyhledejDleVybehu.SelectedItem = null;
+            listBoxZvirata.Items.Clear();
+            listBoxZvirata.Items.AddRange(zvireLogika.VratZvirata().ToArray());
+        }
+
         private void buttonUlozit_Click(object sender, EventArgs e)
         {
             vybehLogika.Ulozit("Vybehy.json");
             zvireLogika.Ulozit("Zvirata.json");
             zzaznamLogika.Ulozit("ZZaznamy.json");
+            krmeniLogika.Ulozit("Krmeni.json");
         }
 
         private void buttonNacist_Click(object sender, EventArgs e)
@@ -110,15 +153,22 @@ namespace projekt_sprava_zvirat
             //label8.Text = vybehLogika.vratId().ToString();
 
             zzaznamLogika.Nacti("ZZaznamy.json");
+            krmeniLogika.Nacti("Krmeni.json");
             aktualizujVse();
         }
 
         private void buttonSmazatVbh_Click(object sender, EventArgs e)
         {
+            List<Zvire> listZvire = new List<Zvire>();
             if ((Vybeh)listBoxVybehy.SelectedItem != null)
             {
-                zvireLogika.SmazatZvirataPodleV((Vybeh)listBoxVybehy.SelectedItem);
+                listZvire = zvireLogika.SmazatZvirataPodleV((Vybeh)listBoxVybehy.SelectedItem);
                 vybehLogika.odeberVybeh((Vybeh)listBoxVybehy.SelectedItem);
+                foreach (var zvire in listZvire)
+                {
+                    zzaznamLogika.SmazatZaznamyPodleZ(zvire);
+                    krmeniLogika.SmazatKrmeniPodleZ(zvire);
+                }
                 aktualizujVse();
             }
             else return;
@@ -132,6 +182,7 @@ namespace projekt_sprava_zvirat
                 vybehLogika.uberPocetZvirat(vybeh);
                 zvireLogika.SmazatZvire((Zvire)listBoxZvirata.SelectedItem);
                 zzaznamLogika.SmazatZaznamyPodleZ((Zvire)listBoxZvirata.SelectedItem);
+                krmeniLogika.SmazatKrmeniPodleZ((Zvire)listBoxZvirata.SelectedItem);
                 aktualizujVse();
             }
             else return;
@@ -146,6 +197,10 @@ namespace projekt_sprava_zvirat
             listBoxVybehy.Items.AddRange(vybehLogika.vratVybehy().ToArray());
             listBoxZdravi.Items.Clear();
             listBoxZdravi.Items.AddRange(zzaznamLogika.VratZZaznamy().ToArray());
+            listBoxKrmeni.Items.Clear();
+            listBoxKrmeni.Items.AddRange(krmeniLogika.VratKrmeni().ToArray());
+            comboBoxVyhledejDleVybehu.Items.Clear();
+            comboBoxVyhledejDleVybehu.Items.AddRange(vybehLogika.vratVybehy().ToArray());
             //comboBoxSeznamVybehu.Items.Clear();
             //comboBoxSeznamVybehu.Items.AddRange(vybehLogika.vratVybehy().ToArray());
         }
@@ -208,7 +263,7 @@ namespace projekt_sprava_zvirat
 
         private void buttonPridatZ_Click(object sender, EventArgs e)
         {
-            using (FormZdraviPridat dialog = new FormZdraviPridat(null,null,null, zvireLogika, "Přidat"))
+            using (FormZdraviPridat dialog = new FormZdraviPridat(null, null, null, zvireLogika, "Přidat"))
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
@@ -230,7 +285,7 @@ namespace projekt_sprava_zvirat
             int zvireid = ((ZZaznam)listBoxZdravi.SelectedItem).ZvireId;
             Zvire zvire = zvireLogika.NajdiZvire(zvireid);
 
-            using (FormZdraviPridat dialog = new FormZdraviPridat(nazev,diagnoza,zvire, zvireLogika, "Upravit"))
+            using (FormZdraviPridat dialog = new FormZdraviPridat(nazev, diagnoza, zvire, zvireLogika, "Upravit"))
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
@@ -254,5 +309,56 @@ namespace projekt_sprava_zvirat
             }
             else return;
         }
+
+        private void buttonPridatKrmeni_Click(object sender, EventArgs e)
+        {
+            using (FormPridatKrmeni dialog = new FormPridatKrmeni(null, null, null, zvireLogika, "Přidat"))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var krmeni = new Krmeni(dialog.jidlo, dialog.mnozstvi, dialog.idZ, dialog.jmenoZvire);
+                    krmeniLogika.pridejKrmeni(krmeni);
+                    aktualizujVse();
+                }
+            }
+        }
+
+        private void buttonUpravitKrmeni_Click(object sender, EventArgs e)
+        {
+            if (listBoxKrmeni.SelectedItem == null)
+            {
+                return;
+            }
+            string jidlo = ((Krmeni)listBoxKrmeni.SelectedItem).Jidlo;
+            string mnozstvi = ((Krmeni)listBoxKrmeni.SelectedItem).Mnozstvi;
+            int zvireid = ((Krmeni)listBoxKrmeni.SelectedItem).ZvireId;
+            Zvire zvire = zvireLogika.NajdiZvire(zvireid);
+
+            using (FormPridatKrmeni dialog = new FormPridatKrmeni(jidlo, mnozstvi, zvire, zvireLogika, "Upravit"))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    string jmenoZ = dialog.jmenoZvire;
+                    jidlo = ZvireLogika.VelkePismeno(dialog.jidlo);
+                    mnozstvi = dialog.mnozstvi;
+                    zvireid = dialog.idZ;
+
+                    krmeniLogika.UpravitKrmeni((Krmeni)listBoxKrmeni.SelectedItem, jidlo, mnozstvi, zvireid, jmenoZ);
+                    aktualizujVse();
+                }
+            }
+        }
+
+        private void buttonSmazatKrmeni_Click(object sender, EventArgs e)
+        {
+            if ((Krmeni)listBoxKrmeni.SelectedItem != null)
+            {
+                krmeniLogika.SmazatKrmeni((Krmeni)listBoxKrmeni.SelectedItem);
+                aktualizujVse();
+            }
+            else return;
+        }
+
+
     }
 }

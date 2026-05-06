@@ -45,6 +45,14 @@
             buttonPridatZZ = new Button();
             buttonUpravitZZ = new Button();
             buttonSmazatZZ = new Button();
+            buttonSmazatKrmeni = new Button();
+            buttonUpravitKrmeni = new Button();
+            buttonPridatKrmeni = new Button();
+            listBoxKrmeni = new ListBox();
+            label1 = new Label();
+            label2 = new Label();
+            textBoxVyhledavaniDruh = new TextBox();
+            comboBoxVyhledejDleVybehu = new ComboBox();
             SuspendLayout();
             // 
             // listBoxVybehy
@@ -52,7 +60,7 @@
             listBoxVybehy.FormattingEnabled = true;
             listBoxVybehy.Location = new Point(169, 36);
             listBoxVybehy.Name = "listBoxVybehy";
-            listBoxVybehy.Size = new Size(164, 139);
+            listBoxVybehy.Size = new Size(177, 139);
             listBoxVybehy.TabIndex = 2;
             // 
             // buttonPridatVybeh
@@ -61,7 +69,7 @@
             buttonPridatVybeh.Name = "buttonPridatVybeh";
             buttonPridatVybeh.Size = new Size(101, 23);
             buttonPridatVybeh.TabIndex = 3;
-            buttonPridatVybeh.Text = "Přidat";
+            buttonPridatVybeh.Text = "Přidat Výběh";
             buttonPridatVybeh.UseVisualStyleBackColor = true;
             buttonPridatVybeh.Click += button1_Click;
             // 
@@ -71,7 +79,7 @@
             buttonPridatZvire.Name = "buttonPridatZvire";
             buttonPridatZvire.Size = new Size(101, 23);
             buttonPridatZvire.TabIndex = 9;
-            buttonPridatZvire.Text = "Přidat";
+            buttonPridatZvire.Text = "Přidat Zvíře";
             buttonPridatZvire.UseVisualStyleBackColor = true;
             buttonPridatZvire.Click += buttonPridatZvire_Click;
             // 
@@ -106,11 +114,11 @@
             // textBoxVyhledavani
             // 
             textBoxVyhledavani.ForeColor = SystemColors.WindowFrame;
-            textBoxVyhledavani.Location = new Point(204, 395);
+            textBoxVyhledavani.Location = new Point(143, 395);
             textBoxVyhledavani.Name = "textBoxVyhledavani";
-            textBoxVyhledavani.Size = new Size(100, 23);
+            textBoxVyhledavani.Size = new Size(111, 23);
             textBoxVyhledavani.TabIndex = 18;
-            textBoxVyhledavani.Text = "Vyhledávání";
+            textBoxVyhledavani.Text = "Vyhledávání jméno";
             textBoxVyhledavani.MouseClick += textBoxVyhledavani_MouseClick;
             textBoxVyhledavani.TextChanged += textBoxVyhledavani_TextChanged;
             textBoxVyhledavani.Leave += textBoxVyhledavani_Leave;
@@ -178,7 +186,7 @@
             // listBoxZdravi
             // 
             listBoxZdravi.FormattingEnabled = true;
-            listBoxZdravi.Location = new Point(488, 36);
+            listBoxZdravi.Location = new Point(493, 36);
             listBoxZdravi.Name = "listBoxZdravi";
             listBoxZdravi.Size = new Size(177, 139);
             listBoxZdravi.TabIndex = 27;
@@ -213,11 +221,100 @@
             buttonSmazatZZ.UseVisualStyleBackColor = true;
             buttonSmazatZZ.Click += buttonSmazatZZ_Click;
             // 
+            // buttonSmazatKrmeni
+            // 
+            buttonSmazatKrmeni.Location = new Point(687, 330);
+            buttonSmazatKrmeni.Name = "buttonSmazatKrmeni";
+            buttonSmazatKrmeni.Size = new Size(101, 23);
+            buttonSmazatKrmeni.TabIndex = 34;
+            buttonSmazatKrmeni.Text = "Smazat";
+            buttonSmazatKrmeni.UseVisualStyleBackColor = true;
+            buttonSmazatKrmeni.Click += buttonSmazatKrmeni_Click;
+            // 
+            // buttonUpravitKrmeni
+            // 
+            buttonUpravitKrmeni.Location = new Point(687, 294);
+            buttonUpravitKrmeni.Name = "buttonUpravitKrmeni";
+            buttonUpravitKrmeni.Size = new Size(101, 23);
+            buttonUpravitKrmeni.TabIndex = 33;
+            buttonUpravitKrmeni.Text = "Upravit";
+            buttonUpravitKrmeni.UseVisualStyleBackColor = true;
+            buttonUpravitKrmeni.Click += buttonUpravitKrmeni_Click;
+            // 
+            // buttonPridatKrmeni
+            // 
+            buttonPridatKrmeni.Location = new Point(687, 254);
+            buttonPridatKrmeni.Name = "buttonPridatKrmeni";
+            buttonPridatKrmeni.Size = new Size(101, 23);
+            buttonPridatKrmeni.TabIndex = 32;
+            buttonPridatKrmeni.Text = "Přidat Krmeni";
+            buttonPridatKrmeni.UseVisualStyleBackColor = true;
+            buttonPridatKrmeni.Click += buttonPridatKrmeni_Click;
+            // 
+            // listBoxKrmeni
+            // 
+            listBoxKrmeni.FormattingEnabled = true;
+            listBoxKrmeni.Location = new Point(493, 239);
+            listBoxKrmeni.Name = "listBoxKrmeni";
+            listBoxKrmeni.Size = new Size(177, 139);
+            listBoxKrmeni.TabIndex = 31;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 10F);
+            label1.Location = new Point(487, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(189, 19);
+            label1.TabIndex = 35;
+            label1.Text = "Seznam zdravotních záznamů";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10F);
+            label2.Location = new Point(498, 210);
+            label2.Name = "label2";
+            label2.Size = new Size(172, 19);
+            label2.TabIndex = 36;
+            label2.Text = "Seznam záznamů o krmení";
+            // 
+            // textBoxVyhledavaniDruh
+            // 
+            textBoxVyhledavaniDruh.ForeColor = SystemColors.WindowFrame;
+            textBoxVyhledavaniDruh.Location = new Point(277, 395);
+            textBoxVyhledavaniDruh.Name = "textBoxVyhledavaniDruh";
+            textBoxVyhledavaniDruh.Size = new Size(115, 23);
+            textBoxVyhledavaniDruh.TabIndex = 37;
+            textBoxVyhledavaniDruh.Text = "Vyhledávání druh";
+            textBoxVyhledavaniDruh.MouseClick += textBoxVyhledavaniDruh_MouseClick;
+            textBoxVyhledavaniDruh.TextChanged += textBoxVyhledavaniDruh_TextChanged;
+            textBoxVyhledavaniDruh.Leave += textBoxVyhledavaniDruh_Leave;
+            // 
+            // comboBoxVyhledejDleVybehu
+            // 
+            comboBoxVyhledejDleVybehu.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxVyhledejDleVybehu.FormattingEnabled = true;
+            comboBoxVyhledejDleVybehu.Location = new Point(204, 434);
+            comboBoxVyhledejDleVybehu.Name = "comboBoxVyhledejDleVybehu";
+            comboBoxVyhledejDleVybehu.Size = new Size(121, 23);
+            comboBoxVyhledejDleVybehu.TabIndex = 38;
+            comboBoxVyhledejDleVybehu.SelectionChangeCommitted += comboBoxVyhledejDleVybehu_SelectionChangeCommitted;
+            comboBoxVyhledejDleVybehu.Click += comboBoxVyhledejDleVybehu_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 478);
+            Controls.Add(comboBoxVyhledejDleVybehu);
+            Controls.Add(textBoxVyhledavaniDruh);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(buttonSmazatKrmeni);
+            Controls.Add(buttonUpravitKrmeni);
+            Controls.Add(buttonPridatKrmeni);
+            Controls.Add(listBoxKrmeni);
             Controls.Add(buttonSmazatZZ);
             Controls.Add(buttonUpravitZZ);
             Controls.Add(buttonPridatZZ);
@@ -259,5 +356,13 @@
         private Button buttonPridatZZ;
         private Button buttonUpravitZZ;
         private Button buttonSmazatZZ;
+        private Button buttonSmazatKrmeni;
+        private Button buttonUpravitKrmeni;
+        private Button buttonPridatKrmeni;
+        private ListBox listBoxKrmeni;
+        private Label label1;
+        private Label label2;
+        private TextBox textBoxVyhledavaniDruh;
+        private ComboBox comboBoxVyhledejDleVybehu;
     }
 }
